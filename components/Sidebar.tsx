@@ -1,19 +1,33 @@
 /* _rfce command to create the template */
 import { HomeIcon, SearchIcon, LibraryIcon, PlusCircleIcon, HeartIcon, RssIcon } from "@heroicons/react/outline";
 import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { playlistIdState } from "../atoms/playlistAtom";
+import useSpotify from "../hooks/useSpotify";
+import Playlist from "../interfaces/Playlist.interface";
 
 function Sidebar() {
+    const spotifyApi = useSpotify();
     const { data: session, status } = useSession();
-    console.log(session);
+    const [playlists, setPlaylists] = useState([]);
+    const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
+
+    useEffect(() => {
+        if (spotifyApi.getAccessToken()) {
+            spotifyApi.getUserPlaylists().then((data: any) => {
+                setPlaylists(data.body.items);
+            })
+        }
+    }, [session, spotifyApi]);
+
+    console.log("picked playlist: ", playlistId)
 
     return (
-        <div className="text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide" >
+        <div className="text-gray-500 p-5 text-xs lg:text-sm border-r 
+        border-gray-900 overflow-y-scroll scrollbar-hide
+        h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex" >
             <div className="space-y-4" >
-                <button className="flex items-center space-x-2 hover:text-white"
-                    onClick={() => signOut()}
-                >
-                    <p>Logout</p>
-                </button>
                 {/* Flex, by default puts items in a row */}
                 {/* items-center center them in the y axis */}
                 {/* space-x-2 gives spacing of 2 for the items of flex */}
@@ -46,22 +60,11 @@ function Sidebar() {
                 <hr className="border-t-[0.1px] border-gray-900" />
 
                 {/* Playlists... */}
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
-                <p className="cursor-pointer hover:text-white" >Playlist name...</p>
+                {playlists.map((playlist: Playlist) => (
+                    <p key={playlist.id} onClick={() => setPlaylistId(playlist.id)} className="cursor-pointer hover:text-white">
+                        {playlist.name}
+                    </p>
+                ))}
             </div>
         </div>
     )
