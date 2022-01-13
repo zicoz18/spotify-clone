@@ -34,3 +34,5 @@ Step 3
 ```
 npm run dev
 ```
+
+Written with a Youtube Tutorial: https://www.youtube.com/watch?v=3xrko3GpYoU
