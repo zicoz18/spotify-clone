@@ -1,27 +1,36 @@
-# Next.js + Tailwind CSS Example
+# A Spotify Clone App written with Next.js, React, Tailwind CSS, Typescript, Recoil.js 
+This app is kind of remote control to your spotify. So, it does not play the songs directly, it makes your spotify play the song. Therefore, you can start a song from this app, close this app and continue listening. But you can not play a song without an already active spotify. This is not a fully functional Spotify Clone. 
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+## Implemented Functionalities
+* Login with Spotify, with session
+* Display user's playlists
+* Display songs inside a user's playlist
+* Play and stop songs
+* Adjust song's volume
 
-## Preview
+### Other presented parts such as 'Liked Songs', 'Home' are not implemented
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+## How to run locally
+Step 1
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+Create an env file
 
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
+In the root directory of the project create a file named: 
+```sh
+.env.local
 ```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Example Environment file:
+```sh
+NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_CLIENT_SECRET={YOUR_SPOTIFY_CLIENT_SECRET}
+NEXT_PUBLIC_CLIENT_ID={YOUR_SPOTIFY_CLIENT_ID}
+JWT_SECRET={SECRET_VALUE_FOR_JWT}
+```
+Step 2
+```sh
+npm i
+```
+Step 3
+```
+npm run dev
+```
